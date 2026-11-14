@@ -12,23 +12,30 @@
 # Cài đặt thư viện node_modules
 npm install
 
-# Tải trình duyệt Playwright Chromium
-npx playwright install chromium
+# Tải trình duyệt Playwright
+npx playwright install
 ```
 
 ---
 
 ## 2. Các câu lệnh chạy Test thông dụng
 
-| Mục đích | Câu lệnh ngắn gọn |
+| Mục đích | Câu lệnh |
 |---|---|
 | **Chạy toàn bộ test (chạy ngầm - Headless)** | `npm test` |
+| **Chạy test và tự động build Allure Report** | `npm run test:allure` |
 | **Chạy mở trình duyệt xem trực tiếp (Headed)** | `npm run test:headed` |
-| **Chạy riêng module Đăng nhập (Login)** | `npm run test:auth` |
 | **Mở giao diện Playwright UI Mode (Trực quan, dễ debug)** | `npm run test:ui` |
 | **Chạy chế độ Debug từng bước (Playwright Inspector)** | `npm run test:debug` |
+| **Chạy riêng module Đăng nhập (Auth / Login)** | `npm run test:auth` |
+| **Chạy riêng module Dashboard** | `npm run test:dashboard` |
 | **Chạy các test quan trọng (@Smoke)** | `npm run test:smoke` |
 | **Chạy bộ test hồi quy (@Regression)** | `npm run test:regression` |
+| **Chỉ chạy trên Chromium (Chrome)** | `npm run test:chromium` |
+| **Chỉ chạy trên Firefox** | `npm run test:firefox` |
+| **Chỉ chạy trên WebKit (Safari)** | `npm run test:webkit` |
+| **Kiểm tra lỗi kiểu dữ liệu TypeScript** | `npm run typecheck` |
+| **Dọn dẹp kết quả test và báo cáo cũ** | `npm run clean` |
 
 ---
 
@@ -72,4 +79,3 @@ npx playwright test --project=chromium --repeat-each=2
 # Chạy test với 1 luồng duy nhất (tuần tự, không song song)
 npx playwright test --workers=1
 ```
-
