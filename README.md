@@ -6,7 +6,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-%E2%89%A520.x-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![GitHub Actions CI](https://img.shields.io/badge/CI%2FCD-GitHub_Actions-2088FF?logo=github-actions&logoColor=white)](https://github.com/features/actions)
 
-Framework kiểm thử tự động toàn diện (End-to-End Automation Testing) dành cho hệ thống **AICAM**, được xây dựng dựa trên **Playwright** và **TypeScript** theo mô hình **Page Object Model (POM)** chuẩn doanh nghiệp.
+Framework kiểm thử tự động toàn diện (End-to-End Automation Testing) dành cho hệ thống **AICAM**, được xây dựng dựa trên **Playwright** và **TypeScript** theo mô hình **Page Object Model (POM)** chuẩn doanh nghiệp. 
 
 ---
 
