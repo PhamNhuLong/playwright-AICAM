@@ -2,9 +2,8 @@ import { defineConfig, devices } from '@playwright/test';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 
-// Load environment variables (.env first, then override with .env.local if present)
+// Load environment variables from .env file
 dotenv.config({ path: path.resolve(__dirname, '.env') });
-dotenv.config({ path: path.resolve(__dirname, '.env.local'), override: true });
 
 export default defineConfig({
   testDir: './src/tests',
