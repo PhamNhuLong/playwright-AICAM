@@ -1,8 +1,9 @@
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 
-// Ensure .env is loaded
+// Ensure .env and .env.local are loaded (.env.local overrides .env)
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
+dotenv.config({ path: path.resolve(process.cwd(), '.env.local'), override: true });
 
 export const envConfig = {
   baseUrl: process.env.BASE_URL || 'https://aicam.example.com',
