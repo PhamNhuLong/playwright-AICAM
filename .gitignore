@@ -1,0 +1,24 @@
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Playwright Test Artifacts
+test-results/
+playwright-report/
+playwright/.cache/
+blob-report/
+
+# Allure Report Artifacts
+allure-results/
+allure-report/
+
+# Environment and sensitive data
+.env
+*.local
+
+# System files
+.DS_Store
+Thumbs.db
+

@@ -1,0 +1,104 @@
+name: Playwright & Allure Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Java for Allure CLI
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps chromium
+
+    - name: Run Playwright tests
+      id: run_tests
+      env:
+        BASE_URL: ${{ secrets.BASE_URL || 'https://aicam.example.com' }}
+        VALID_USERNAME: ${{ secrets.VALID_USERNAME }}
+        VALID_PASSWORD: ${{ secrets.VALID_PASSWORD }}
+        HEADLESS: 'true'
+        CI: 'true'
+      run: npm test
+      continue-on-error: true
+
+    - name: Generate Allure Report
+      if: always()
+      run: npm run allure:generate
+
+    - name: Upload Playwright HTML Report Artifact
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-html-report
+        path: playwright-report/
+        retention-days: 14
+
+    - name: Upload Allure Results Artifact
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: allure-raw-results
+        path: allure-results/
+        retention-days: 14
+
+    - name: Upload Allure Report Artifact
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: allure-report
+        path: allure-report/
+        retention-days: 14
+
+    # Setup and Deploy to GitHub Pages (allows live interactive report viewing)
+    - name: Setup GitHub Pages
+      if: always() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      uses: actions/configure-pages@v5
+
+    - name: Upload Allure Report to GitHub Pages
+      if: always() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: allure-report/
+
+    - name: Deploy to GitHub Pages
+      if: always() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      id: deployment
+      uses: actions/deploy-pages@v4
+
+    - name: Fail workflow if tests failed
+      if: steps.run_tests.outcome != 'success'
+      run: |
+        echo "Playwright tests encountered failures. Check the Allure Report for details."
+        exit 1

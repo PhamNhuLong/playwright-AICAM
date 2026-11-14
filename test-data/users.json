@@ -1,0 +1,48 @@
+{
+  "validUser": {
+    "username": "aicam_user_sample",
+    "password": "SamplePassword@123",
+    "description": "Dummy placeholder for repository. Actual credentials are loaded via .env or GitHub Secrets."
+  },
+  "invalidCaseUser": {
+    "username": "sample_lowercase_user",
+    "password": "SamplePassword@123",
+    "description": "Placeholder for case-sensitivity testing. Test dynamically uses lowercase of valid username."
+  },
+  "nonExistentUser": {
+    "username": "ghost_user_999",
+    "password": "DummyPassword@123",
+    "description": "User account that does not exist in the database for negative testing."
+  },
+  "wrongPasswordUser": {
+    "username": "aicam_user_sample",
+    "password": "WrongPassword@123",
+    "description": "Valid username combined with an intentionally invalid password."
+  },
+  "policyViolationPasswords": [
+    {
+      "password": "vnpt@123",
+      "reason": "Missing uppercase letter"
+    },
+    {
+      "password": "VNPT@123",
+      "reason": "Missing lowercase letter"
+    },
+    {
+      "password": "VnptPassword",
+      "reason": "Missing number"
+    },
+    {
+      "password": "Vnpt12345",
+      "reason": "Missing special character"
+    }
+  ],
+  "expectedMessages": {
+    "emptyFields": "Tên đăng nhập hoặc mật khẩu không được để trống!",
+    "emptyUsername": "Tên đăng nhập hoặc mật khẩu không được để trống!",
+    "emptyPassword": "Tên đăng nhập hoặc mật khẩu không được để trống!",
+    "nonExistentAccount": "Tên đăng nhập hoặc mật khẩu không chính xác!",
+    "invalidCredentials": "Tên đăng nhập hoặc mật khẩu không chính xác!",
+    "accountLocked": "Tài khoản đã bị khóa"
+  }
+}
