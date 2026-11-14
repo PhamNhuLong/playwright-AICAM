@@ -81,24 +81,27 @@ jobs:
         path: allure-report/
         retention-days: 14
 
-    # Setup and Deploy to GitHub Pages (allows live interactive report viewing)
-    - name: Setup GitHub Pages
-      if: always() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-      uses: actions/configure-pages@v5
-
-    - name: Upload Allure Report to GitHub Pages
+    - name: Upload Pages artifact
       if: always() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
       uses: actions/upload-pages-artifact@v3
       with:
         path: allure-report/
 
-    - name: Deploy to GitHub Pages
-      if: always() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-      id: deployment
-      uses: actions/deploy-pages@v4
-
-    - name: Fail workflow if tests failed
+    - name: Fail job if tests failed
       if: steps.run_tests.outcome != 'success'
       run: |
-        echo "Playwright tests encountered failures. Check the Allure Report for details."
+        echo "❌ Playwright tests encountered failures. Check the Allure Report artifact for details."
         exit 1
+
+  deploy-pages:
+    name: Deploy to GitHub Pages
+    if: always() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    needs: test
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

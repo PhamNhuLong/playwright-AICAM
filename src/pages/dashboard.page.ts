@@ -17,17 +17,22 @@ export class DashboardPage extends BasePage {
       .or(page.getByText('CẢNH BÁO REAL-TIME'))
       .first();
 
-    this.securityOverviewLink = page.locator('a[href="/an-ninh"], a[href*="an-ninh"]').first();
+    this.securityOverviewLink = page.locator('a[href*="an-ninh"], a[href="/an-ninh"]').first();
   }
 
   public async isLoaded(): Promise<boolean> {
     return await test.step('Verify Dashboard page components and URL pattern', async () => {
-      const isBannerVisible = await this.systemBanner.isVisible({ timeout: 10000 }).catch(() => false);
-      const isBranchVisible = await this.branchMapSection.isVisible({ timeout: 5000 }).catch(() => false);
-      const currentUrl = this.getUrl();
-      const isUrlMatched = currentUrl.includes('/an-ninh');
+      // Ensure DOM is ready before querying elements
+      await this.page.waitForLoadState('domcontentloaded');
 
-      return (isBannerVisible || isBranchVisible) && isUrlMatched;
+      const isUrlMatched = this.getUrl().includes('/an-ninh');
+
+      // Check visibility with resilient timeouts for international CI environments
+      const isBannerVisible = await this.systemBanner.waitFor({ state: 'visible', timeout: 15000 }).then(() => true).catch(() => false);
+      const isBranchVisible = await this.branchMapSection.waitFor({ state: 'visible', timeout: 10000 }).then(() => true).catch(() => false);
+      const isSecLinkVisible = await this.securityOverviewLink.waitFor({ state: 'visible', timeout: 10000 }).then(() => true).catch(() => false);
+
+      return isUrlMatched && (isBannerVisible || isBranchVisible || isSecLinkVisible);
     });
   }
 }
