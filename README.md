@@ -26,7 +26,7 @@ Framework kiểm thử tự động toàn diện (End-to-End Automation Testing)
 ## 🎯 Tính năng cốt lõi
 
 - **Page Object Model (POM):** Tách biệt rạch ròi giữa giao diện (Locators / Page Actions) và kịch bản test (Test Specs / Assertions).
-- **Custom Fixtures:** Tự động inject các Page Object (`loginPage`, `dashboardPage`) vào từng test block, quản lý vòng đời kiểm thử tự động.
+- **Custom Fixtures:** Tự động inject các Page Object (`loginPage`, `dashboardPage`) vào từng test block, quản lý vòng đời kiểm thử tự động. 
 - **Nested Allure Steps (Step Đa Tầng):**
   - **Parent Step:** Bước nghiệp vụ cấp cao rõ ràng bằng tiếng Anh (e.g. `Step 1: Enter valid credentials and submit`).
   - **Child Steps:** Bước chi tiết kỹ thuật kèm giá trị Locator cụ thể và tham số truyền vào (e.g. `Fill "••••••••" into "Password Input" [Locator: locator('input#PassWord')]`).
