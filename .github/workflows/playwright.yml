@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
+  schedule:
+    # Chạy tự động vào lúc 06:00 AM mỗi ngày (Giờ Việt Nam UTC+7 = 23:00 UTC)
+    - cron: '0 23 * * *'
 
 permissions:
   contents: read
