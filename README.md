@@ -134,6 +134,8 @@ Vào repository trên GitHub: **Settings** ➔ **Secrets and variables** ➔ **A
 - `BASE_URL`: Địa chỉ URL / IP của hệ thống AICAM.
 - `VALID_USERNAME`: Tên tài khoản đăng nhập kiểm thử.
 - `VALID_PASSWORD`: Mật khẩu tài khoản đăng nhập.
+- `TELEGRAM_BOT_TOKEN`: *(Tùy chọn)* Token Telegram Bot tạo từ `@BotFather` để nhận thông báo kết quả.
+- `TELEGRAM_CHAT_ID`: *(Tùy chọn)* Chat ID hoặc Group ID Telegram nhận tin nhắn thông báo.
 
 ---
 
@@ -197,6 +199,7 @@ Quy trình tự động hóa đã được thiết lập sẵn tại [.github/wo
 - **Thực thi:** Chạy kiểm thử song song, tự động sinh Allure Report.
 - **Artifacts:** Tự động upload `allure-report`, `allure-raw-results` và `playwright-html-report` (lưu trữ 14 ngày).
 - **GitHub Pages:** Tự động triển khai báo cáo Allure lên GitHub Pages để xem trực tiếp trên nền web.
+- **Telegram Notification:** Tự động gửi tin nhắn báo cáo kết quả (Pass/Fail, tác giả, commit, link Allure Report) về Telegram ngay khi pipeline kết thúc.
 
 ---
 

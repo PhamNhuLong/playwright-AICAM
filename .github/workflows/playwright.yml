@@ -18,6 +18,7 @@ concurrency:
 
 jobs:
   test:
+    name: Run Playwright Test Suite
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -105,3 +106,51 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  notify:
+    name: Send Telegram Notification
+    needs: [test, deploy-pages]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Notification to Telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TEST_RESULT: ${{ needs.test.result }}
+          REPO_NAME: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+          COMMIT_SHA: ${{ github.sha }}
+          ACTOR: ${{ github.actor }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          REPORT_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "⚠️ Telegram secrets (TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID) are not configured. Skipping notification."
+            exit 0
+          fi
+
+          if [ "$TEST_RESULT" = "success" ]; then
+            STATUS_ICON="✅"
+            STATUS_TEXT="PASSED"
+          else
+            STATUS_ICON="❌"
+            STATUS_TEXT="FAILED"
+          fi
+
+          SHORT_SHA=$(echo "$COMMIT_SHA" | cut -c1-7)
+
+          MESSAGE="<b>${STATUS_ICON} Playwright Test Suite ${STATUS_TEXT}</b>%0A%0A"
+          MESSAGE="${MESSAGE}📁 <b>Repository:</b> <code>${REPO_NAME}</code>%0A"
+          MESSAGE="${MESSAGE}🌿 <b>Branch:</b> <code>${BRANCH}</code>%0A"
+          MESSAGE="${MESSAGE}👤 <b>Author:</b> ${ACTOR}%0A"
+          MESSAGE="${MESSAGE}📝 <b>Commit:</b> <code>${SHORT_SHA}</code> - ${COMMIT_MSG}%0A%0A"
+          MESSAGE="${MESSAGE}📊 <b>Allure Report:</b> <a href=\"${REPORT_URL}\">View Live Report</a>%0A"
+          MESSAGE="${MESSAGE}🔍 <b>CI Run Details:</b> <a href=\"${RUN_URL}\">View GitHub Run</a>"
+
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${TELEGRAM_CHAT_ID}" \
+            -d "text=${MESSAGE}" \
+            -d "parse_mode=HTML" \
+            -d "disable_web_page_preview=true"
