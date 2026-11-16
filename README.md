@@ -195,7 +195,7 @@ npm run report
 
 Quy trình tự động hóa đã được thiết lập sẵn tại [.github/workflows/playwright.yml](.github/workflows/playwright.yml):
 - **Tự động kích hoạt:** Khi có sự kiện `push` hoặc `pull_request` vào nhánh `main` hoặc `master`.
-- **Lịch chạy định kỳ (Scheduled Cron):** Tự động kích hoạt chạy test vào lúc **06:00 AM hàng ngày** (giờ Việt Nam).
+- **Lịch chạy định kỳ (Scheduled Cron):** Tự động kích hoạt chạy test vào lúc **03:47 AM hàng ngày** (giờ Việt Nam).
 - **Môi trường:** Ubuntu Latest, cài đặt Node.js 20 & Java 21 Temurin.
 - **Thực thi:** Chạy kiểm thử song song, tự động sinh Allure Report.
 - **Artifacts:** Tự động upload `allure-report`, `allure-raw-results` và `playwright-html-report` (lưu trữ 14 ngày).

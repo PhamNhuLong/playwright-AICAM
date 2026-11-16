@@ -7,8 +7,8 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
   schedule:
-    # Chạy tự động vào lúc 06:00 AM mỗi ngày (Giờ Việt Nam UTC+7 = 23:00 UTC)
-    - cron: '0 23 * * *'
+    # Chạy tự động vào lúc 03:47 AM mỗi ngày (Giờ Việt Nam UTC+7 = 20:47 UTC)
+    - cron: '47 20 * * *'
 
 permissions:
   contents: read
