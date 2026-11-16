@@ -10,7 +10,7 @@ Framework kiểm thử tự động toàn diện (End-to-End Automation Testing)
 
 ---
 
-## 📑 Mục lục
+## 📑 Mục lục 
 1. [Tính năng cốt lõi](#-tính-năng-cốt-lõi)
 2. [Kiến trúc thư mục dự án](#-kiến-trúc-thư-mục-dự-án)
 3. [Yêu cầu hệ thống](#-yêu-cầu-hệ-thống)
