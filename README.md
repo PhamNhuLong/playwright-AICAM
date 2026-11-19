@@ -19,7 +19,7 @@ Framework kiểm thử tự động toàn diện (End-to-End Automation Testing)
 6. [Bảng lệnh thực thi kiểm thử](#-bảng-lệnh-thực-thi-kiểm-thử)
 7. [Hệ thống báo cáo kết quả (Reporting)](#-hệ-thống-báo-cáo-kết-quả-reporting)
 8. [Tích hợp CI/CD & GitHub Pages](#-tích-hợp-cicd--github-pages)
-9. [Quy chuẩn mã nguồn (Best Practices)](#-quy-chuẩn-mã-nguồn-best-practices)
+9. [Quy chuẩn mã nguồn (Best Practices)](#-quy-chuẩn-mã-nguồn-best-practices) 
 
 ---
 
